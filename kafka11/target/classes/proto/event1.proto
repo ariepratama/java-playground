@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package protos;
+
+option java_package = "protos";
+option java_outer_classname = "Event1Proto";
+
+message Event1 {
+    int32 id = 1;
+    int32 event_type = 2;
+    string comment = 3;
+    string some_more_comments = 4;
+    string username = 5;
+    string first_name = 6;
+    string last_name = 7;
+}

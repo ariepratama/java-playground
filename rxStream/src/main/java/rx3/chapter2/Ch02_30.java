@@ -1,26 +1,55 @@
 package rx3.chapter2;
 
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class Ch02_30 {
 
   public static void main(String args[]){
-    // single is an observable that only emit 1 output
-    Single.just("yellow")
-        .map(String::length)
-        .subscribe(System.out::println);
+    // Maybe is an observable that return 1 OR 0 elements
+    // pretty much like java's Optional
+    Maybe<String> source = Maybe.just("100");
+    // On complete will not be called when there is an element on MaybeSource / Observable
+    source.subscribe(
+        x-> System.out.println("1: on Success " + x),
+        x -> System.out.println("1: on Error " + x),
+        () -> System.out.println("1: on Complete")
+    );
 
-    // calling Observable.first will return single
-    // because single needs to emit 1 element, then there's a default item to be returned
-    // in case it's empty
-    Observable<String> source = Observable.just("one", "two", "three");
-    source.first("None")
-        .subscribe(System.out::println);
+    source = Maybe.empty();
+    source.subscribe(
+        x-> System.out.println("2: on Success" + x),
+        x -> System.out.println("2: on Error " + x),
+        () -> System.out.println("2: on Complete")
+    );
 
-    source = Observable.empty();
-    source.first("No El")
-        .subscribe(System.out::println);
+    // in this similar settings as the first scenario, but now with Observable
+    // the subscriber will call onSuccess, but also on complete
+    Observable<String> anotherSource = Observable.just("200");
+    anotherSource.subscribe(
+        x -> System.out.println("3: on success " + x),
+        x -> System.out.println("3: on Error " + x),
+        () -> System.out.println("3: on Complete")
+    );
+
+    anotherSource = Observable.empty();
+    anotherSource.subscribe(
+        x -> System.out.println("3: on success " + x),
+        x -> System.out.println("3: on Error " + x),
+        () -> System.out.println("3: on Complete")
+    );
+
+    // function firstElement() yield Maybe
+    // then again will not call on complete
+    anotherSource = Observable.just("3", "2", "1");
+    anotherSource.firstElement()
+        .subscribe(
+          x -> System.out.println("4: on success " + x),
+          x -> System.out.println("4: on error " + x),
+            () -> System.out.println("4: on complete")
+        );
+
   }
 
 }
