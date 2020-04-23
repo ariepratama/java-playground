@@ -3,7 +3,7 @@ package rx3.chapter2;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
-public class Ch02_29 {
+public class Ch02_30 {
 
   public static void main(String args[]){
     // single is an observable that only emit 1 output
