@@ -10,3 +10,5 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 
 GET     /sse                        controllers.SseController.sse()
+
+GET     /ws                         controllers.WsController.socket()
